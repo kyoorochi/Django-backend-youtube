@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 class UserTestCase(TestCase):
     # 일반 유저 생성 테스트
     def test_create_user(self):
-        email = 'pmh0521@gmail.com'
+        email = 'test0521@gmail.com'
         password = 'password0521'
 
         user = get_user_model().objects.create_user(email=email, password=password)
@@ -24,7 +24,7 @@ class UserTestCase(TestCase):
         
     # 슈퍼 유저 생성 테스트
     def test_create_superuser(self):
-        email = 'kyoorochi@daum.net'
+        email = 'test0521@daum.net'
         password = 'password0521'
 
         user = get_user_model().objects.create_superuser(email=email, password=password)
