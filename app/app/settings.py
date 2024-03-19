@@ -42,6 +42,7 @@ DJANGO_SYSTEM_APPS = [
 
 CUSTOM_USER_APPS = [
     'users.apps.UsersConfig', # label 변경할 일이 많다.
+    'videos.apps.VideosConfig',
     'rest_framework',
     'drf_spectacular'
 ]
