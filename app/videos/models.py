@@ -3,7 +3,7 @@ from common.models import CommonModel
 from users.models import User
 
 class Video(CommonModel):
-    title = models.CharField(max_length=30, required=True)
+    title = models.CharField(max_length=30)
     description = models.TextField(blank=True)
     link = models.URLField()
     category = models.CharField(max_length=20)

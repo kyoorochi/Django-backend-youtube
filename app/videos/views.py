@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.view import APIView
+from rest_framework.views import APIView
 from .models import Video
 from .serializers import VideoSerializer
 from rest_framework.response import Response
@@ -12,8 +12,8 @@ from rest_framework import status
 # [POST] : 전체 비디오
 # [PUT], [DELETE] : X
 
-class VideoList():
-    def get(self):
+class VideoList(APIView):
+    def get(self, request):
         videos = Video.objects.all() # QuerySet[Video, Video, Video...]
         # 직렬화 (Object -> json) - Serializer(내가 원하는 데이터만 내려주는 기능)
 
@@ -37,12 +37,30 @@ class VideoList():
 # [PUT] : 특정 비디오 업데이트
 # [DELETE] : 특정 비디오 삭제
 
-# class VideoDetail():
-#     def get():
-#         pass
+from rest_framework.exceptions import NotFound
+class VideoDetail(APIView):
+    def get(self, request, pk): # api/v1/video/{pk}
+        try:
+            video_obj = Video.objects.get(pk=pk)
+        except Video.DoesNotExist:
+            raise NotFound
 
-#     def put():
-#         pass
+        serializer = VideoSerializer(video_obj) # object -> json
+        return Response(serializer.data)
+    
+    def put(self, request, pk):
+        video_obj = Video.objects.get(pk=pk) # DB에서 불러온 데이터
+        user_data = request.data # 유저가 보낸 데이터
 
-#     def delete();
-#         pass
+        serializer = VideoSerializer(video_obj, user_data)
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save() # is_valid() 함수를 실행해야 save() 함수가 실행된다.
+
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        video_obj = Video.objects.get(pk=pk)
+        video_obj.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
