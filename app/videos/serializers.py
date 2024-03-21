@@ -1,12 +1,26 @@
 from rest_framework import serializers
 from .models import Video
 from users.serializers import UserSerializer
+from comments.serializers import CommentSerializer
 
-class VideoSerializer(serializers.ModelSerializer):
+class VideoListSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer(read_only=True)
+    # Video:User -> Video(FK)라 User를 찾을 수 있음
+    user = UserSerializer(read_only=True)    
 
     class Meta:
         model = Video
-        fields = '__all__'
-        # depty = 1 # 이건 비번(hash)까지 노출시키니 테스트때 말고는 절대 사용금물, 배포때는 삭제하자
+        fields = '__all__'        
+
+class VideoDetailSerializer(serializers.ModelSerializer):
+
+    # Video:User -> Video(FK)라 User를 찾을 수 있음
+    user = UserSerializer(read_only=True)
+
+    # Video:Comment -> Comment(FK)라 찾아야 하는 상황임
+    # Reverse Accessor 를 사용(_set)해서 부모에 속한 자녀들을 모두 찾을 수 있다.
+    comment_set = CommentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Video
+        fields = '__all__'      
