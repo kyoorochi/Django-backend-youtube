@@ -11,8 +11,16 @@ from rest_framework import status
 
 # SubscriptionList
 # api/v1/subscription
+# [GET] : pk = 나 자신, (pk 입력 받을 필요 없음)
 # [POST] : 구독하기
 class SubscriptionList(APIView):
+    # 내가 구독한 유튜버(들) 리스트 조회
+    def get(self, request):
+        subs = Subscription.objects.filter(subscriber=request.user)
+        serializer = SubSerializer(subs, many=True) # objects -> json
+
+        return Response(serializer.data)
+
     def post(self, request):
         user_data = request.data # json -> object (Serializer)
         serializer = SubSerializer(data=user_data)

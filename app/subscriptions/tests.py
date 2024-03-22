@@ -15,6 +15,16 @@ class SubscriptionTestCase(APITestCase):
 
         self.client.login(email='test0521@gmail.com', password='password0521')
 
+    def test_sub_list_get(self):
+        Subscription.objects.create(subscriber=self.user1, subscribed_to=self.user2)
+
+        url = reverse('sub-list')
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(res.data), 1)
+        self.assertEqual(res.data[0]['subscribed_to'], self.user2.id)
+
     # 구독 버튼 테스트
     # [POST] api/v1/sub
     def test_sub_list_post(self):
@@ -22,7 +32,6 @@ class SubscriptionTestCase(APITestCase):
         data = {
             'subscriber' : self.user1.pk,
             'subscribed_to' : self.user2.pk
-
         }
 
         res = self.client.post(url, data)

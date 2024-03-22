@@ -12,6 +12,7 @@ class VideoListSerializer(serializers.ModelSerializer):
         model = Video
         fields = '__all__'        
 
+from reactions.models import Reaction
 class VideoDetailSerializer(serializers.ModelSerializer):
 
     # Video:User -> Video(FK)라 User를 찾을 수 있음
@@ -21,6 +22,11 @@ class VideoDetailSerializer(serializers.ModelSerializer):
     # Reverse Accessor 를 사용(_set)해서 부모에 속한 자녀들을 모두 찾을 수 있다.
     comment_set = CommentSerializer(many=True, read_only=True)
 
+    reactions = serializers.SerializerMethodField()
+
     class Meta:
         model = Video
-        fields = '__all__'      
+        fields = '__all__'
+
+    def get_reactions(self, video):
+        return Reaction.get_video_reaction(video) # 두껍아 비디오 줄께, 리액션 내놔라

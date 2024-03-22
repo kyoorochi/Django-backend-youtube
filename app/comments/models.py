@@ -19,3 +19,6 @@ class Comment(CommonModel):
     # Comment -> Video(잇섭), Video(영알남), Video(아로치카) (불가능)
 
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
+
+    # 대댓글
+    # parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
