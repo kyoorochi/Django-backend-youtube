@@ -55,7 +55,7 @@ CUSTOM_USER_APPS = [
 INSTALLED_APPS = CUSTOM_USER_APPS + DJANGO_SYSTEM_APPS
 
 # Channels를 사용하기 위한 설정
-ASGI_APPLICATION = 'app.routes.application' # Socket (비동기처리) + HTTP (동기)
+ASGI_APPLICATION = 'app.route.application' # Socket (비동기처리) + HTTP (동기)
 # -> FAST API (비동기) + (동기)
 
 WSGI_APPLICATION = 'app.wsgi.application' # HTTP Base - Rest API (동기처리)
@@ -148,3 +148,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.user'
 
 REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'}
+
+CHANNEL_LAYERS = {'default': {'BACKEND' : 'channels.layers.InMemoryChannelLayer'}}
