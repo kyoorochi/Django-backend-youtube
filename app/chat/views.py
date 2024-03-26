@@ -22,11 +22,13 @@ class ChatRoomList(APIView):
     def post(self, request):
         user_data = request.data # 유저가 보내준 데이터
         serializer = ChatRoomSerializer(data=user_data)
+        print(user_data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data) # 데이터 저장 성공        
         return Response(serializer.errors) # 데이터 저장 실패
+        
 
 ## (2) ChatRoomDetail
 # api/v1/chat/{room_id}
