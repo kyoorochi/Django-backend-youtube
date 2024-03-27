@@ -141,8 +141,8 @@ REST_FRAMEWORK = {'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'}
 
 CHANNEL_LAYERS = {'default': {'BACKEND' : 'channels.layers.InMemoryChannelLayer'}}
 
-STATIC_URL = '/static/static'
-MEDIA_URL = '/static/media'
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
 
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
