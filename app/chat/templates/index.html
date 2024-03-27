@@ -46,7 +46,7 @@
             
             // WebSocket 연결
             const chatSocket = new WebSocket(
-                "ws://" + "ec2-13-125-253-153.ap-northeast-2.compute.amazonaws.com" + "/ws/chat/" + roomId + "/"
+                "ws://" + window.location.host + "/ws/chat/" + roomId + "/"
             );
 
             chatSocket.onmessage = function (e) {
